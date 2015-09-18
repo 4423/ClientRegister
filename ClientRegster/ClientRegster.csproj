@@ -90,6 +90,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientDataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ADO\TextSchoolCollection.cs" />
+    <Compile Include="Models\ADO\SQLServerGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

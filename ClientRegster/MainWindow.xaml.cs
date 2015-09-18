@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClientRegster.Models.ADO;
 
 namespace ClientRegster
 {
@@ -23,6 +24,16 @@ namespace ClientRegster
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void buttonInputSchools_Click(object sender, RoutedEventArgs e)
+        {
+            var schoolList = new TextSchoolCollection(@"C:\Users\YUHI\school.txt");
+
+            var sql = SQLServerGateway.Instance;
+            sql.ImportSchoolList(schoolList);
+
+            this.listBoxSchoolName.ItemsSource = sql.GetAllSchool().Select(x => x.Name);
         }
     }
 }
