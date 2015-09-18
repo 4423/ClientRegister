@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientRegster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="ClientRegister" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Label Content="学校名" />
+            <TextBox x:Name="textBoxSchoolName" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Label Content="氏名" />
+            <TextBox x:Name="textBoxStudentName" />
+        </StackPanel>
     </Grid>
 </Window>
