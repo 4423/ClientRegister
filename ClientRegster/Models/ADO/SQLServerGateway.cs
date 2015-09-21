@@ -33,13 +33,10 @@ namespace ClientRegster.Models.ADO
 
         public void ImportSchoolList(IEnumerable<School> schoolList)
         {
-            foreach (var school in schoolList)
-            {
-                this.InsertSchool(school);
-            }
+            this.context.School.InsertAllOnSubmit(schoolList);
+            this.SecureSubmitChanges();
         }
-
-
+        
         public void InsertSchool(School school)
         {
             this.context.School.InsertOnSubmit(school);
@@ -47,9 +44,27 @@ namespace ClientRegster.Models.ADO
         }
 
 
+        public void ImportStudentList(IEnumerable<Student> studentList)
+        {
+            this.context.Student.InsertAllOnSubmit(studentList);
+            this.SecureSubmitChanges();
+        }
+
+        public void InsertStudent(Student student)
+        {
+            this.context.Student.InsertOnSubmit(student);
+            this.SecureSubmitChanges();
+        }
+
+
         public IEnumerable<School> GetAllSchool()
         {
             return this.context.School;
+        }
+
+        public IEnumerable<Student> GetAllStudent()
+        {
+            return this.context.Student;
         }
     }
 }

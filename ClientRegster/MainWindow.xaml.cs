@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ClientRegster.Models.ADO;
+using Microsoft.Win32;
 
 namespace ClientRegster
 {
@@ -28,7 +29,18 @@ namespace ClientRegster
 
         private void buttonInputSchools_Click(object sender, RoutedEventArgs e)
         {
-            var schoolList = new TextSchoolCollection(@"C:\Users\YUHI\school.txt");
+            var ofd = new OpenFileDialog()
+            {
+                FilterIndex = 1,
+                Filter = "テキスト ファイル(.txt)|*.txt|HTML File(*.html, *.htm)|*.html;*.htm|All Files (*.*)|*.*"
+            };
+            bool? result = ofd.ShowDialog();
+            if (result == false)
+            {
+                return;
+            }
+
+            var schoolList = new TextSchoolCollection(ofd.FileName);
 
             var sql = SQLServerGateway.Instance;
             sql.ImportSchoolList(schoolList);

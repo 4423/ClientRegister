@@ -11,9 +11,11 @@ namespace ClientRegster.Models.ADO
     {
         public TextSchoolCollection(string excelFilePath)
         {
-            using (var sr = new StreamReader(excelFilePath))
+            //Shift-JISで読み込み
+            using (var sr = new StreamReader(excelFilePath, Encoding.GetEncoding(932)))
             {
                 var schoolList = sr.ReadToEnd()
+                                    .Replace("\r\n", "\n")
                                     .Split('\n')
                                     .Select(x => new School() { Name = x });
                 this.AddRange(schoolList);

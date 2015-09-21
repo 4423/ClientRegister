@@ -30,12 +30,12 @@ namespace ClientRegster.Models.ADO
 		
     #region 拡張メソッドの定義
     partial void OnCreated();
-    partial void InsertSchool(School instance);
-    partial void UpdateSchool(School instance);
-    partial void DeleteSchool(School instance);
     partial void InsertStudent(Student instance);
     partial void UpdateStudent(Student instance);
     partial void DeleteStudent(Student instance);
+    partial void InsertSchool(School instance);
+    partial void UpdateSchool(School instance);
+    partial void DeleteSchool(School instance);
     #endregion
 		
 		public ClientDataClassesDataContext() : 
@@ -68,14 +68,6 @@ namespace ClientRegster.Models.ADO
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<School> School
-		{
-			get
-			{
-				return this.GetTable<School>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Student> Student
 		{
 			get
@@ -83,131 +75,12 @@ namespace ClientRegster.Models.ADO
 				return this.GetTable<Student>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.School")]
-	public partial class School : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private EntityRef<Student> _Student;
-		
-    #region 拡張メソッドの定義
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public School()
-		{
-			this._Student = default(EntityRef<Student>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public System.Data.Linq.Table<School> School
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					if (this._Student.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_School", Storage="_Student", ThisKey="Id", OtherKey="SchoolId", IsForeignKey=true)]
-		public Student Student
-		{
-			get
-			{
-				return this._Student.Entity;
-			}
-			set
-			{
-				Student previousValue = this._Student.Entity;
-				if (((previousValue != value) 
-							|| (this._Student.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Student.Entity = null;
-						previousValue.School.Remove(this);
-					}
-					this._Student.Entity = value;
-					if ((value != null))
-					{
-						value.School.Add(this);
-						this._Id = value.SchoolId;
-					}
-					else
-					{
-						this._Id = default(int);
-					}
-					this.SendPropertyChanged("Student");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<School>();
 			}
 		}
 	}
@@ -347,6 +220,133 @@ namespace ClientRegster.Models.ADO
 		{
 			this.SendPropertyChanging();
 			entity.Student = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.School")]
+	public partial class School : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private EntityRef<Student> _Student;
+		
+    #region 拡張メソッドの定義
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public School()
+		{
+			this._Student = default(EntityRef<Student>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					if (this._Student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_School", Storage="_Student", ThisKey="Id", OtherKey="SchoolId", IsForeignKey=true)]
+		public Student Student
+		{
+			get
+			{
+				return this._Student.Entity;
+			}
+			set
+			{
+				Student previousValue = this._Student.Entity;
+				if (((previousValue != value) 
+							|| (this._Student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student.Entity = null;
+						previousValue.School.Remove(this);
+					}
+					this._Student.Entity = value;
+					if ((value != null))
+					{
+						value.School.Add(this);
+						this._Id = value.SchoolId;
+					}
+					else
+					{
+						this._Id = default(int);
+					}
+					this.SendPropertyChanged("Student");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
