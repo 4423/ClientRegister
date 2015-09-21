@@ -33,7 +33,7 @@ namespace ClientRegster
             var sql = SQLServerGateway.Instance;
             sql.ImportSchoolList(schoolList);
 
-            this.listBoxSchoolName.ItemsSource = sql.GetAllSchool().Select(x => x.Name);
+            this.dataGrid.ItemsSource = sql.GetAllSchool();
         }
     }
 }

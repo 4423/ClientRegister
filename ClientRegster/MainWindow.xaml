@@ -5,32 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientRegster"
         mc:Ignorable="d"
-        Title="ClientRegister" Height="350" Width="525">
-    <Grid>
+        Title="ClientRegister" Height="350" Width="650">
+    
+    <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="buttonInputSchools" Height="20" Content="学校リストの読み込み" Click="buttonInputSchools_Click"/>
-        </StackPanel>
-        
-        <Grid Grid.Row="1">
+        <!--設定ボタン-->
+        <Button Grid.Row="0" x:Name="buttonInputSchools" Click="buttonInputSchools_Click" Style="{StaticResource SettingButtonStyle}" Content="{StaticResource SettingIcon}" HorizontalAlignment="Right"/>
+
+        <Grid Grid.Row="1" Margin="0 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <Label Content="学校名" />
-                <TextBox x:Name="textBoxSchoolName" />
-                <ListBox x:Name="listBoxSchoolName"/>
+            <!--ロゴ-->
+            <StackPanel Orientation="Horizontal">
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="Tokyo Metropolitan College of Industrial Technology" FontSize="9"/>
+                    <Label Content="東京都立産業技術高等専門学校" FontSize="16"/>
+                </StackPanel>
+                <Image Source="./Resources/dynamicT.jpg" Height="50" Margin="10"/>
             </StackPanel>
-            <StackPanel Grid.Column="1">
-                <Label Content="氏名" />
-                <TextBox x:Name="textBoxStudentName" />
-            </StackPanel>
+
+            <!--入力フォーム-->
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Content="学校名" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Column="1" x:Name="textBoxSchoolName" Style="{StaticResource TextBoxStyle}"/>
+
+                <Label Grid.Column="0" Grid.Row="1" Content="氏名" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" x:Name="textBoxStudentName" Style="{StaticResource TextBoxStyle}"/>
+
+                <Button Grid.Row="2" Grid.ColumnSpan="2" Height="30" Content="登録" Style="{StaticResource ButtonStyle}"/>
+            </Grid>
         </Grid>
+
+        <!--データベース内表示-->
+        <DataGrid Grid.Row="2" x:Name="dataGrid" Margin="0 10 0 0"/>
     </Grid>
 </Window>
