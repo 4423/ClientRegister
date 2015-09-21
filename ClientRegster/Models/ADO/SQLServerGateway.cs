@@ -37,10 +37,13 @@ namespace ClientRegster.Models.ADO
             this.SecureSubmitChanges();
         }
         
-        public void InsertSchool(School school)
+        public School InsertSchool(School school)
         {
             this.context.School.InsertOnSubmit(school);
             this.SecureSubmitChanges();
+
+            //この段階でIDとかがschoolのインスタンスに反映されている
+            return school;
         }
 
 
@@ -50,10 +53,55 @@ namespace ClientRegster.Models.ADO
             this.SecureSubmitChanges();
         }
 
-        public void InsertStudent(Student student)
+        public Student InsertStudent(Student student)
         {
             this.context.Student.InsertOnSubmit(student);
             this.SecureSubmitChanges();
+            return student;
+        }
+
+        /// <summary>
+        /// 学生を学校と関連付けてデータベースに挿入します。
+        /// 学校が存在しない場合は新規に学校を登録します。
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="schoolName"></param>
+        public Student InsertStudent(Student student, string schoolName)
+        {
+            if (this.HasSchool(schoolName) == false)
+            {
+                this.InsertSchool(new School() { Name = schoolName });
+            }
+
+            //IDの関連付け
+            var school = this.GetSchool(schoolName);
+            student.SchoolId = this.GetSchool(schoolName).Id;
+
+            this.context.Student.InsertOnSubmit(student);
+            this.SecureSubmitChanges();
+            return student;
+        }
+
+
+        public bool HasSchool(string schoolName)
+        {
+            return this.context.School.Any(x => x.Name == schoolName);
+        }
+
+        public bool HasStudent(string studentName)
+        {
+            return this.context.Student.Any(x => x.Name == studentName);
+        }
+
+
+        public School GetSchool(string schoolName)
+        {
+            return this.context.School.Single(x => x.Name.IndexOf(schoolName) != -1);
+        }
+
+        public Student GetStudent(string studentName)
+        {
+            return this.context.Student.Single(x => x.Name.IndexOf(studentName) != -1);
         }
 
 

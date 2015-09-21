@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,17 @@ namespace ClientRegster
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SQLServerGateway sql;
+        private ObservableCollection<Student> observableStudent;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.sql = SQLServerGateway.Instance;
+            this.observableStudent = new ObservableCollection<Student>(sql.GetAllStudent());
+            this.dataGrid.ItemsSource = this.observableStudent;
         }
+
 
         private void buttonInputSchools_Click(object sender, RoutedEventArgs e)
         {
@@ -41,11 +49,39 @@ namespace ClientRegster
             }
 
             var schoolList = new TextSchoolCollection(ofd.FileName);
-
-            var sql = SQLServerGateway.Instance;
             sql.ImportSchoolList(schoolList);
+        }
 
-            this.dataGrid.ItemsSource = sql.GetAllSchool();
+
+        private void RegisterButtonClick(object sender, RoutedEventArgs e)
+        {
+            //入力のチェック
+            if (this.CanRegister() == false)
+            {
+                return;
+            }
+
+            var student = new Student()
+            {
+                Name = this.textBoxStudentName.Text
+            };
+            student = sql.InsertStudent(student, this.textBoxSchoolName.Text);
+
+            this.observableStudent.Add(student);
+            this.ClearTextBox();
+        }
+
+
+        private bool CanRegister()
+        {
+            return !String.IsNullOrWhiteSpace(this.textBoxSchoolName.Text) 
+                && !String.IsNullOrWhiteSpace(this.textBoxStudentName.Text);
+        }
+
+        private void ClearTextBox()
+        {
+            this.textBoxSchoolName.Text = "";
+            this.textBoxStudentName.Text = "";
         }
     }
 }
