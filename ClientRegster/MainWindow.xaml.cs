@@ -29,9 +29,12 @@ namespace ClientRegster
         public MainWindow()
         {
             InitializeComponent();
+
             this.sql = SQLServerGateway.Instance;
             this.observableStudent = new ObservableCollection<Student>(sql.GetAllStudent());
             this.dataGrid.ItemsSource = this.observableStudent;
+
+            this.textBoxSchoolName.Candidates = sql.GetAllSchool().Select(x => x.Name);
         }
 
 
