@@ -40,7 +40,7 @@ namespace ClientRegster
             var ofd = new OpenFileDialog()
             {
                 FilterIndex = 1,
-                Filter = "テキスト ファイル(.txt)|*.txt|HTML File(*.html, *.htm)|*.html;*.htm|All Files (*.*)|*.*"
+                Filter = "テキスト ファイル(.txt)|*.txt|All Files (*.*)|*.*"
             };
             bool? result = ofd.ShowDialog();
             if (result == false)
