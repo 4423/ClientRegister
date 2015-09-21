@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using ClientRegster.Models.ADO;
 using Microsoft.Win32;
 
-namespace ClientRegster
+namespace ClientRegster.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
